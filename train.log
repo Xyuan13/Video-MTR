@@ -1,0 +1,355 @@
+vision_process: FPS_MAX_FRAMES is not set, using default value: 32
+2025-08-27 20:59:47,005	INFO worker.py:1821 -- Started a local Ray instance.
+[36m(pid=2813)[0m vision_process: FPS_MAX_FRAMES is not set, using default value: 32
+[36m(main_task pid=2813)[0m {'actor_rollout_ref': {'actor': {'clip_ratio': 0.2,
+[36m(main_task pid=2813)[0m                                  'entropy_coeff': 0.001,
+[36m(main_task pid=2813)[0m                                  'fsdp_config': {'fsdp_size': -1,
+[36m(main_task pid=2813)[0m                                                  'optimizer_offload': False,
+[36m(main_task pid=2813)[0m                                                  'param_offload': False,
+[36m(main_task pid=2813)[0m                                                  'wrap_policy': {'min_num_params': 0}},
+[36m(main_task pid=2813)[0m                                  'grad_clip': 1.0,
+[36m(main_task pid=2813)[0m                                  'grad_norm_threshold': 1000,
+[36m(main_task pid=2813)[0m                                  'kl_loss_coef': 0.001,
+[36m(main_task pid=2813)[0m                                  'kl_loss_type': 'mse',
+[36m(main_task pid=2813)[0m                                  'optim': {'lr': 1e-06,
+[36m(main_task pid=2813)[0m                                            'lr_warmup_steps_ratio': 0.0,
+[36m(main_task pid=2813)[0m                                            'min_lr_ratio': None,
+[36m(main_task pid=2813)[0m                                            'total_training_steps': -1,
+[36m(main_task pid=2813)[0m                                            'warmup_style': 'constant'},
+[36m(main_task pid=2813)[0m                                  'ppo_epochs': 1,
+[36m(main_task pid=2813)[0m                                  'ppo_max_token_len_per_gpu': 16384,
+[36m(main_task pid=2813)[0m                                  'ppo_micro_batch_size': None,
+[36m(main_task pid=2813)[0m                                  'ppo_micro_batch_size_per_gpu': 1,
+[36m(main_task pid=2813)[0m                                  'ppo_mini_batch_size': 8,
+[36m(main_task pid=2813)[0m                                  'shuffle': False,
+[36m(main_task pid=2813)[0m                                  'strategy': 'fsdp',
+[36m(main_task pid=2813)[0m                                  'ulysses_sequence_parallel_size': 1,
+[36m(main_task pid=2813)[0m                                  'use_dynamic_bsz': False,
+[36m(main_task pid=2813)[0m                                  'use_kl_loss': False},
+[36m(main_task pid=2813)[0m                        'hybrid_engine': True,
+[36m(main_task pid=2813)[0m                        'model': {'enable_gradient_checkpointing': True,
+[36m(main_task pid=2813)[0m                                  'external_lib': None,
+[36m(main_task pid=2813)[0m                                  'override_config': {},
+[36m(main_task pid=2813)[0m                                  'path': 'Qwen/Qwen2.5-VL-7B-Instruct',
+[36m(main_task pid=2813)[0m                                  'use_remove_padding': True},
+[36m(main_task pid=2813)[0m                        'ref': {'fsdp_config': {'param_offload': False,
+[36m(main_task pid=2813)[0m                                                'wrap_policy': {'min_num_params': 0}},
+[36m(main_task pid=2813)[0m                                'log_prob_max_token_len_per_gpu': 16384,
+[36m(main_task pid=2813)[0m                                'log_prob_micro_batch_size': None,
+[36m(main_task pid=2813)[0m                                'log_prob_micro_batch_size_per_gpu': 1,
+[36m(main_task pid=2813)[0m                                'log_prob_use_dynamic_bsz': False,
+[36m(main_task pid=2813)[0m                                'ulysses_sequence_parallel_size': 1},
+[36m(main_task pid=2813)[0m                        'rollout': {'disable_log_stats': True,
+[36m(main_task pid=2813)[0m                                    'do_sample': True,
+[36m(main_task pid=2813)[0m                                    'dtype': 'bfloat16',
+[36m(main_task pid=2813)[0m                                    'enable_chunked_prefill': True,
+[36m(main_task pid=2813)[0m                                    'enforce_eager': True,
+[36m(main_task pid=2813)[0m                                    'free_cache_engine': True,
+[36m(main_task pid=2813)[0m                                    'gpu_memory_utilization': 0.2,
+[36m(main_task pid=2813)[0m                                    'ignore_eos': False,
+[36m(main_task pid=2813)[0m                                    'limit_mm_per_prompt': 32,
+[36m(main_task pid=2813)[0m                                    'load_format': 'dummy_dtensor',
+[36m(main_task pid=2813)[0m                                    'log_prob_max_token_len_per_gpu': 16384,
+[36m(main_task pid=2813)[0m                                    'log_prob_micro_batch_size': None,
+[36m(main_task pid=2813)[0m                                    'log_prob_micro_batch_size_per_gpu': 1,
+[36m(main_task pid=2813)[0m                                    'log_prob_use_dynamic_bsz': False,
+[36m(main_task pid=2813)[0m                                    'max_model_len': 8192,
+[36m(main_task pid=2813)[0m                                    'max_num_batched_tokens': 65536,
+[36m(main_task pid=2813)[0m                                    'max_num_seqs': 1024,
+[36m(main_task pid=2813)[0m                                    'max_trajectory_length': 5120,
+[36m(main_task pid=2813)[0m                                    'n': 1,
+[36m(main_task pid=2813)[0m                                    'name': 'vllm',
+[36m(main_task pid=2813)[0m                                    'prompt_length': 4096,
+[36m(main_task pid=2813)[0m                                    'response_length': 512,
+[36m(main_task pid=2813)[0m                                    'temperature': 0.7,
+[36m(main_task pid=2813)[0m                                    'tensor_model_parallel_size': 2,
+[36m(main_task pid=2813)[0m                                    'top_k': -1,
+[36m(main_task pid=2813)[0m                                    'top_p': 0.95,
+[36m(main_task pid=2813)[0m                                    'use_fire_sampling': False}},
+[36m(main_task pid=2813)[0m  'algorithm': {'adv_estimator': 'bi_level_gae',
+[36m(main_task pid=2813)[0m                'gamma': 1.0,
+[36m(main_task pid=2813)[0m                'high_level_gamma': 1,
+[36m(main_task pid=2813)[0m                'kl_ctrl': {'kl_coef': 0.001, 'type': 'fixed'},
+[36m(main_task pid=2813)[0m                'kl_penalty': 'kl',
+[36m(main_task pid=2813)[0m                'lam': 1.0},
+[36m(main_task pid=2813)[0m  'critic': {'cliprange_value': 0.5,
+[36m(main_task pid=2813)[0m             'forward_max_token_len_per_gpu': 32768,
+[36m(main_task pid=2813)[0m             'forward_micro_batch_size': None,
+[36m(main_task pid=2813)[0m             'forward_micro_batch_size_per_gpu': 1,
+[36m(main_task pid=2813)[0m             'grad_clip': 1.0,
+[36m(main_task pid=2813)[0m             'model': {'enable_gradient_checkpointing': True,
+[36m(main_task pid=2813)[0m                       'external_lib': None,
+[36m(main_task pid=2813)[0m                       'fsdp_config': {'fsdp_size': -1,
+[36m(main_task pid=2813)[0m                                       'optimizer_offload': True,
+[36m(main_task pid=2813)[0m                                       'param_offload': True,
+[36m(main_task pid=2813)[0m                                       'wrap_policy': {'min_num_params': 0}},
+[36m(main_task pid=2813)[0m                       'override_config': {},
+[36m(main_task pid=2813)[0m                       'path': 'Qwen/Qwen2.5-VL-7B-Instruct',
+[36m(main_task pid=2813)[0m                       'tokenizer_path': 'Qwen/Qwen2.5-VL-7B-Instruct',
+[36m(main_task pid=2813)[0m                       'use_remove_padding': True},
+[36m(main_task pid=2813)[0m             'optim': {'lr': 1e-05,
+[36m(main_task pid=2813)[0m                       'lr_warmup_steps_ratio': 0.0,
+[36m(main_task pid=2813)[0m                       'min_lr_ratio': None,
+[36m(main_task pid=2813)[0m                       'total_training_steps': -1,
+[36m(main_task pid=2813)[0m                       'warmup_style': 'constant'},
+[36m(WorkerDict pid=3047)[0m Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[36m(WorkerDict pid=3198)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VLForTokenClassification is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=3198)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[36m(WorkerDict pid=3198)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=3198)[0m Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]
+[36m(WorkerDict pid=3199)[0m Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.[32m [repeated 7x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[36m(WorkerDict pid=3197)[0m Loading checkpoint shards:  20%|██        | 1/5 [00:05<00:22,  5.70s/it]
+[36m(WorkerDict pid=3199)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VisionTransformerPretrainedModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 14x across cluster][0m
+[36m(WorkerDict pid=3199)[0m You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3199)[0m Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3195)[0m Loading checkpoint shards:  80%|████████  | 4/5 [00:12<00:02,  2.65s/it][32m [repeated 21x across cluster][0m
+[36m(WorkerDict pid=3199)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:10<00:00,  1.53s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:10<00:00,  2.07s/it]
+[36m(WorkerDict pid=3199)[0m Some weights of Qwen2_5_VLForTokenClassification were not initialized from the model checkpoint at Qwen/Qwen2.5-VL-7B-Instruct and are newly initialized: ['score.bias']
+[36m(WorkerDict pid=3199)[0m You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  20%|██        | 1/5 [01:34<06:18, 94.54s/it][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3201)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  1.77s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:13<00:00,  2.61s/it][32m [repeated 6x across cluster][0m
+[36m(WorkerDict pid=3201)[0m Some weights of Qwen2_5_VLForTokenClassification were not initialized from the model checkpoint at Qwen/Qwen2.5-VL-7B-Instruct and are newly initialized: ['score.bias'][32m [repeated 6x across cluster][0m
+[36m(WorkerDict pid=3201)[0m You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.[32m [repeated 6x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  40%|████      | 2/5 [02:58<04:25, 88.49s/it]
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  60%|██████    | 3/5 [04:24<02:54, 87.21s/it]
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  80%|████████  | 4/5 [05:48<01:25, 85.94s/it]
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards: 100%|██████████| 5/5 [05:48<00:00, 55.04s/it]Loading checkpoint shards: 100%|██████████| 5/5 [05:48<00:00, 69.74s/it]
+[36m(WorkerDict pid=3047)[0m Some weights of Qwen2_5_VLForTokenClassification were not initialized from the model checkpoint at Qwen/Qwen2.5-VL-7B-Instruct and are newly initialized: ['score.bias', 'score.weight']
+[36m(WorkerDict pid=3047)[0m You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+[36m(WorkerDict pid=3195)[0m Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]
+[36m(WorkerDict pid=3200)[0m Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  3.89it/s]
+[36m(main_task pid=2813)[0m             'ppo_epochs': 1,
+[36m(main_task pid=2813)[0m             'ppo_max_token_len_per_gpu': 32768,
+[36m(main_task pid=2813)[0m             'ppo_micro_batch_size': None,
+[36m(main_task pid=2813)[0m             'ppo_micro_batch_size_per_gpu': 1,
+[36m(main_task pid=2813)[0m             'ppo_mini_batch_size': 8,
+[36m(main_task pid=2813)[0m             'shuffle': False,
+[36m(main_task pid=2813)[0m             'strategy': 'fsdp',
+[36m(main_task pid=2813)[0m             'ulysses_sequence_parallel_size': 1,
+[36m(main_task pid=2813)[0m             'use_dynamic_bsz': False,
+[36m(main_task pid=2813)[0m             'use_reward_mask': False},
+[36m(main_task pid=2813)[0m  'custom_reward_function': {'name': 'compute_score', 'path': None},
+[36m(main_task pid=2813)[0m  'data': {'filter_overlong_prompts': False,
+[36m(main_task pid=2813)[0m           'image_key': 'images',
+[36m(main_task pid=2813)[0m           'max_prompt_length': 4096,
+[36m(main_task pid=2813)[0m           'max_response_length': 512,
+[36m(main_task pid=2813)[0m           'max_trajectory_length': 5120,
+[36m(main_task pid=2813)[0m           'prompt_key': 'prompt',
+[36m(main_task pid=2813)[0m           'return_raw_chat': False,
+[36m(main_task pid=2813)[0m           'return_raw_input_ids': False,
+[36m(main_task pid=2813)[0m           'shuffle': True,
+[36m(main_task pid=2813)[0m           'tokenizer': None,
+[36m(main_task pid=2813)[0m           'train_batch_size': 16,
+[36m(main_task pid=2813)[0m           'train_files': 'data/parquet_files/train.parquet',
+[36m(main_task pid=2813)[0m           'truncation': 'left',
+[36m(main_task pid=2813)[0m           'val_batch_size': 8,
+[36m(main_task pid=2813)[0m           'val_files': 'data/parquet_files/test.parquet'},
+[36m(main_task pid=2813)[0m  'reward_model': {'enable': False,
+[36m(main_task pid=2813)[0m                   'forward_max_token_len_per_gpu': 32768,
+[36m(main_task pid=2813)[0m                   'max_length': None,
+[36m(main_task pid=2813)[0m                   'micro_batch_size': None,
+[36m(main_task pid=2813)[0m                   'micro_batch_size_per_gpu': None,
+[36m(main_task pid=2813)[0m                   'model': {'external_lib': None,
+[36m(main_task pid=2813)[0m                             'fsdp_config': {'fsdp_size': -1,
+[36m(main_task pid=2813)[0m                                             'param_offload': False,
+[36m(main_task pid=2813)[0m                                             'wrap_policy': {'min_num_params': 0}},
+[36m(main_task pid=2813)[0m                             'input_tokenizer': 'Qwen/Qwen2.5-VL-7B-Instruct',
+[36m(main_task pid=2813)[0m                             'path': '~/models/FsfairX-LLaMA3-RM-v0.1',
+[36m(main_task pid=2813)[0m                             'use_remove_padding': False},
+[36m(main_task pid=2813)[0m                   'reward_manager': 'naive',
+[36m(main_task pid=2813)[0m                   'strategy': 'fsdp',
+[36m(main_task pid=2813)[0m                   'ulysses_sequence_parallel_size': 1,
+[36m(main_task pid=2813)[0m                   'use_dynamic_bsz': False},
+[36m(main_task pid=2813)[0m  'rollout_manager': {'base_url': 'http://localhost:5000',
+[36m(main_task pid=2813)[0m                      'max_trajectory_length': 5120,
+[36m(main_task pid=2813)[0m                      'max_turns': 3,
+[36m(main_task pid=2813)[0m                      'max_workers': 8,
+[36m(main_task pid=2813)[0m                      'n_gpus_per_node': 8,
+[36m(main_task pid=2813)[0m                      'n_trajectory': 2,
+[36m(main_task pid=2813)[0m                      'special_token_for_loss_mask': ['<|box_start|>',
+[36m(main_task pid=2813)[0m                                                      '<|box_end|>'],
+[36m(main_task pid=2813)[0m                      'timeout': 1200,
+[36m(main_task pid=2813)[0m                      'truncation': 'left',
+[36m(main_task pid=2813)[0m                      'use_gae_mask': True,
+[36m(main_task pid=2813)[0m                      'use_loss_mask': True,
+[36m(main_task pid=2813)[0m                      'use_multi_turn_reward': True,
+[36m(main_task pid=2813)[0m                      'use_service': False,
+[36m(main_task pid=2813)[0m                      'window_size': 2},
+[36m(main_task pid=2813)[0m  'trainer': {'balance_batch': True,
+[36m(main_task pid=2813)[0m              'critic_warmup': 0,
+[36m(main_task pid=2813)[0m              'default_hdfs_dir': None,
+[36m(main_task pid=2813)[0m              'default_local_dir': 'checkpoints/video-mtr_demo/video_ppo_7B_0826',
+[36m(main_task pid=2813)[0m              'del_local_ckpt_after_load': False,
+[36m(main_task pid=2813)[0m              'experiment_name': 'video_ppo_7B_0826',
+[36m(main_task pid=2813)[0m              'logger': ['console', 'wandb'],
+[36m(main_task pid=2813)[0m              'n_gpus_per_node': 8,
+[36m(main_task pid=2813)[0m              'nnodes': 1,
+[36m(main_task pid=2813)[0m              'project_name': 'video-mtr_demo',
+[36m(main_task pid=2813)[0m              'remove_previous_ckpt_in_save': False,
+[36m(main_task pid=2813)[0m              'resume_from_path': False,
+[36m(main_task pid=2813)[0m              'resume_mode': 'auto',
+[36m(main_task pid=2813)[0m              'save_freq': 100,
+[36m(main_task pid=2813)[0m              'test_freq': 50,
+[36m(main_task pid=2813)[0m              'total_epochs': 30,
+[36m(main_task pid=2813)[0m              'total_training_steps': 500,
+[36m(main_task pid=2813)[0m              'val_before_train': True,
+[36m(main_task pid=2813)[0m              'val_generations_to_log_to_wandb': 4,
+[36m(main_task pid=2813)[0m              'val_only': False}}
+[36m(main_task pid=2813)[0m [DEBUG] use_ref=True
+[36m(main_task pid=2813)[0m WARNING: val_batch_size is deprecated. Validation datasets are sent to inference engines as a whole batch, which will schedule the memory themselves.
+[36m(main_task pid=2813)[0m [validate_config] All configuration checks passed successfully!
+[36m(main_task pid=2813)[0m dataset len: 7896
+[36m(main_task pid=2813)[0m dataset len: 100
+[36m(main_task pid=2813)[0m [DEBUG] ray_trainer.py: val_batch_size: 8
+[36m(main_task pid=2813)[0m Size of train dataloader: 493
+[36m(main_task pid=2813)[0m Size of val dataloader: 13
+[36m(main_task pid=2813)[0m Total training steps: 500
+[36m(WorkerDict pid=3047)[0m Critic overriding config {'bos_token_id': None, 'eos_token_id': 151645, 'pad_token_id': 151643}
+[36m(WorkerDict pid=3198)[0m Qwen2vl patch applied!
+[36m(WorkerDict pid=3047)[0m Qwen2_5_VLForTokenClassification contains 7.75B parameters
+[36m(WorkerDict pid=3047)[0m Before critic FSDP, memory allocated (GB): 0.0, memory reserved (GB): 0.0
+[36m(WorkerDict pid=3199)[0m Qwen2vl patch applied![32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3047)[0m NCCL version 2.21.5+cuda12.4
+[36m(WorkerDict pid=3195)[0m Total steps: 500, num_warmup_steps: 0
+[36m(WorkerDict pid=3047)[0m After critic FSDP, memory allocated (GB): 3.6313538551330566, memory reserved (GB): 12.048828125
+[36m(WorkerDict pid=3197)[0m Critic use_remove_padding=True
+[36m(WorkerDict pid=3200)[0m Qwen2vl patch applied!
+[36m(WorkerDict pid=3201)[0m Total steps: 500, num_warmup_steps: 0[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3201)[0m Critic use_remove_padding=True[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Model config after override: Qwen2_5_VLConfig {
+[36m(WorkerDict pid=3047)[0m   "_name_or_path": "Qwen/Qwen2.5-VL-7B-Instruct",
+[36m(WorkerDict pid=3047)[0m   "architectures": [
+[36m(WorkerDict pid=3047)[0m     "Qwen2_5_VLForConditionalGeneration"
+[36m(WorkerDict pid=3047)[0m   ],
+[36m(WorkerDict pid=3047)[0m   "attention_dropout": 0.0,
+[36m(WorkerDict pid=3047)[0m   "eos_token_id": 151645,
+[36m(WorkerDict pid=3047)[0m   "hidden_act": "silu",
+[36m(WorkerDict pid=3047)[0m   "hidden_size": 3584,
+[36m(WorkerDict pid=3047)[0m   "image_token_id": 151655,
+[36m(WorkerDict pid=3047)[0m   "initializer_range": 0.02,
+[36m(WorkerDict pid=3195)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.68it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.12it/s]
+[36m(WorkerDict pid=3198)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VLForConditionalGeneration is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[36m(WorkerDict pid=3198)[0m Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][32m [repeated 8x across cluster][0m
+[36m(WorkerDict pid=3197)[0m Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.99it/s][32m [repeated 31x across cluster][0m
+[36m(WorkerDict pid=3197)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.34it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.93it/s][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3199)[0m Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2_5_VLForConditionalGeneration is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3199)[0m Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.01s/it][32m [repeated 30x across cluster][0m
+[36m(WorkerDict pid=3199)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.62it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.33it/s][32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.95s/it][32m [repeated 2x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.24s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.57s/it]
+[36m(WorkerDict pid=3047)[0m   "intermediate_size": 18944,
+[36m(WorkerDict pid=3047)[0m   "max_position_embeddings": 128000,
+[36m(WorkerDict pid=3047)[0m   "max_window_layers": 28,
+[36m(WorkerDict pid=3047)[0m   "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=3047)[0m   "num_attention_heads": 28,
+[36m(WorkerDict pid=3047)[0m   "num_hidden_layers": 28,
+[36m(WorkerDict pid=3047)[0m   "num_key_value_heads": 4,
+[36m(WorkerDict pid=3047)[0m   "pad_token_id": 151643,
+[36m(WorkerDict pid=3047)[0m   "rms_norm_eps": 1e-06,
+[36m(WorkerDict pid=3047)[0m   "rope_scaling": {
+[36m(WorkerDict pid=3047)[0m     "mrope_section": [
+[36m(WorkerDict pid=3047)[0m       16,
+[36m(WorkerDict pid=3047)[0m       24,
+[36m(WorkerDict pid=3047)[0m       24
+[36m(WorkerDict pid=3047)[0m     ],
+[36m(WorkerDict pid=3047)[0m     "rope_type": "default",
+[36m(WorkerDict pid=3047)[0m     "type": "default"
+[36m(WorkerDict pid=3047)[0m   },
+[36m(WorkerDict pid=3047)[0m   "rope_theta": 1000000.0,
+[36m(WorkerDict pid=3047)[0m   "sliding_window": 32768,
+[36m(WorkerDict pid=3047)[0m   "tie_word_embeddings": false,
+[36m(WorkerDict pid=3047)[0m   "torch_dtype": "bfloat16",
+[36m(WorkerDict pid=3047)[0m   "transformers_version": "4.49.0",
+[36m(WorkerDict pid=3047)[0m   "use_cache": true,
+[36m(WorkerDict pid=3047)[0m   "use_sliding_window": false,
+[36m(WorkerDict pid=3047)[0m   "video_token_id": 151656,
+[36m(WorkerDict pid=3047)[0m   "vision_config": {
+[36m(WorkerDict pid=3047)[0m     "hidden_size": 1280,
+[36m(WorkerDict pid=3047)[0m     "in_chans": 3,
+[36m(WorkerDict pid=3047)[0m     "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=3047)[0m     "spatial_patch_size": 14,
+[36m(WorkerDict pid=3047)[0m     "tokens_per_second": 2
+[36m(WorkerDict pid=3047)[0m   },
+[36m(WorkerDict pid=3047)[0m   "vision_end_token_id": 151653,
+[36m(WorkerDict pid=3047)[0m   "vision_start_token_id": 151652,
+[36m(WorkerDict pid=3047)[0m   "vision_token_id": 151654,
+[36m(WorkerDict pid=3047)[0m   "vocab_size": 152064
+[36m(WorkerDict pid=3047)[0m }
+[36m(WorkerDict pid=3047)[0m 
+[36m(WorkerDict pid=3047)[0m Qwen2_5_VLForConditionalGeneration contains 8.29B parameters
+[36m(WorkerDict pid=3047)[0m wrap_policy: functools.partial(<function _or_policy at 0x7ef0be3dca60>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7ef0be3dc940>, transformer_layer_cls={<class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLDecoderLayer'>, <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLVisionBlock'>})])
+[36m(WorkerDict pid=3047)[0m Actor use_remove_padding=True
+[36m(WorkerDict pid=3197)[0m Qwen2vl patch applied![32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3200)[0m wrap_policy: functools.partial(<function _or_policy at 0x7ee36e908a60>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7ee36e908940>, transformer_layer_cls={<class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLDecoderLayer'>, <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLVisionBlock'>})])[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3200)[0m Actor use_remove_padding=True[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3198)[0m Qwen2vl patch applied!
+[36m(WorkerDict pid=3200)[0m Qwen2vl patch applied!
+[36m(WorkerDict pid=3047)[0m Model config after override: Qwen2_5_VLConfig {
+[36m(WorkerDict pid=3047)[0m   "_name_or_path": "Qwen/Qwen2.5-VL-7B-Instruct",
+[36m(WorkerDict pid=3047)[0m   "architectures": [
+[36m(WorkerDict pid=3047)[0m     "Qwen2_5_VLForConditionalGeneration"
+[36m(WorkerDict pid=3047)[0m   ],
+[36m(WorkerDict pid=3047)[0m   "attention_dropout": 0.0,
+[36m(WorkerDict pid=3047)[0m   "eos_token_id": 151645,
+[36m(WorkerDict pid=3047)[0m   "hidden_act": "silu",
+[36m(WorkerDict pid=3047)[0m   "hidden_size": 3584,
+[36m(WorkerDict pid=3047)[0m   "image_token_id": 151655,
+[36m(WorkerDict pid=3047)[0m   "initializer_range": 0.02,
+[36m(WorkerDict pid=3047)[0m   "intermediate_size": 18944,
+[36m(WorkerDict pid=3047)[0m   "max_position_embeddings": 128000,
+[36m(WorkerDict pid=3047)[0m   "max_window_layers": 28,
+[36m(WorkerDict pid=3047)[0m   "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=3047)[0m   "num_attention_heads": 28,
+[36m(WorkerDict pid=3047)[0m   "num_hidden_layers": 28,
+[36m(WorkerDict pid=3047)[0m   "num_key_value_heads": 4,
+[36m(WorkerDict pid=3047)[0m   "pad_token_id": 151643,
+[36m(WorkerDict pid=3047)[0m   "rms_norm_eps": 1e-06,
+[36m(WorkerDict pid=3047)[0m   "rope_scaling": {
+[36m(WorkerDict pid=3047)[0m     "mrope_section": [
+[36m(WorkerDict pid=3047)[0m       16,
+[36m(WorkerDict pid=3047)[0m       24,
+[36m(WorkerDict pid=3047)[0m       24
+[36m(WorkerDict pid=3047)[0m     ],
+[36m(WorkerDict pid=3047)[0m     "rope_type": "default",
+[36m(WorkerDict pid=3047)[0m     "type": "default"
+[36m(WorkerDict pid=3047)[0m   },
+[36m(WorkerDict pid=3047)[0m   "rope_theta": 1000000.0,
+[36m(WorkerDict pid=3047)[0m   "sliding_window": 32768,
+[36m(WorkerDict pid=3047)[0m   "tie_word_embeddings": false,
+[36m(WorkerDict pid=3047)[0m   "torch_dtype": "bfloat16",
+[36m(WorkerDict pid=3047)[0m   "transformers_version": "4.49.0",
+[36m(WorkerDict pid=3047)[0m   "use_cache": true,
+[36m(WorkerDict pid=3047)[0m   "use_sliding_window": false,
+[36m(WorkerDict pid=3047)[0m   "video_token_id": 151656,
+[36m(WorkerDict pid=3047)[0m   "vision_config": {
+[36m(WorkerDict pid=3047)[0m     "hidden_size": 1280,
+[36m(WorkerDict pid=3047)[0m     "in_chans": 3,
+[36m(WorkerDict pid=3047)[0m     "model_type": "qwen2_5_vl",
+[36m(WorkerDict pid=3047)[0m     "spatial_patch_size": 14,
+[36m(WorkerDict pid=3047)[0m     "tokens_per_second": 2
+[36m(WorkerDict pid=3047)[0m   },
+[36m(WorkerDict pid=3047)[0m   "vision_end_token_id": 151653,
+[36m(WorkerDict pid=3047)[0m   "vision_start_token_id": 151652,
+[36m(WorkerDict pid=3047)[0m   "vision_token_id": 151654,
+[36m(WorkerDict pid=3047)[0m   "vocab_size": 152064
+[36m(WorkerDict pid=3047)[0m }
+[36m(WorkerDict pid=3047)[0m 
+[36m(WorkerDict pid=3047)[0m Qwen2_5_VLForConditionalGeneration contains 8.29B parameters
+[36m(WorkerDict pid=3047)[0m wrap_policy: functools.partial(<function _or_policy at 0x7ef0be3dca60>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7ef0be3dc940>, transformer_layer_cls={<class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLDecoderLayer'>, <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLVisionBlock'>})])
+[36m(WorkerDict pid=3199)[0m Qwen2vl patch applied![32m [repeated 6x across cluster][0m
+[36m(WorkerDict pid=3195)[0m Total steps: 500, num_warmup_steps: 0
+[36m(WorkerDict pid=3195)[0m Actor use_remove_padding=True
+[36m(WorkerDict pid=3200)[0m wrap_policy: functools.partial(<function _or_policy at 0x7ee36e908a60>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7ee36e908940>, transformer_layer_cls={<class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLDecoderLayer'>, <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLVisionBlock'>})])[32m [repeated 7x across cluster][0m
+[36m(WorkerDict pid=3047)[0m Before building vllm rollout, memory allocated (GB): 3.8851656913757324, memory reserved (GB): 18.140625
+[36m(WorkerDict pid=3047)[0m INFO 08-27 21:07:46 __init__.py:207] Automatically detected platform cuda.
+[36m(WorkerDict pid=3047)[0m INFO 08-27 21:07:59 config.py:549] This model supports multiple tasks: {'classify', 'embed', 'score', 'generate', 'reward'}. Defaulting to 'generate'.
+[36m(WorkerDict pid=3047)[0m WARNING 08-27 21:07:59 arg_utils.py:1131] --enable-prefix-caching is currently not supported for multimodal models in v0 and has been disabled.
+[36m(WorkerDict pid=3047)[0m INFO 08-27 21:07:59 config.py:1555] Chunked prefill is enabled with max_num_batched_tokens=65536.
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards:   0% Completed | 0/5 [00:00<?, ?it/s]
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards:  40% Completed | 2/5 [00:00<00:00,  3.70it/s]
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards:  60% Completed | 3/5 [00:01<00:00,  2.68it/s]
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards:  80% Completed | 4/5 [00:01<00:00,  2.38it/s]
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:02<00:00,  2.22it/s]
+[36m(WorkerDict pid=3047)[0m Loading safetensors checkpoint shards: 100% Completed | 5/5 [00:02<00:00,  2.42it/s]
+[36m(WorkerDict pid=3047)[0m 

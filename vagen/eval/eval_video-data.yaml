@@ -1,0 +1,10 @@
+dataset:
+  data_root: /mnt/jfs/Video-Datasets
+  test_anno_path: ./data/eval/eval_mlvu_test.json
+  train_anno_path: null
+video_env:
+  fps: 1
+  init_sample_num: 16
+  max_turn_frames: 8
+  max_turns: 3
+  max_video_frames: 64

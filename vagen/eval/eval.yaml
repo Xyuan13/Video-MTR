@@ -1,0 +1,7 @@
+env1:
+    env_name: video
+    env_config:
+        render_mode: vision
+        video_data_config_path: "./eval_video-data.yaml"
+    train_size: 5000
+    test_size: 5000

@@ -1,0 +1,18 @@
+dataset:
+  data_root: '/mnt/jfs/Video-Datasets' # modify this to your own data root to save the original video datasets
+  train_anno_path: 'data/train/qv-nextgqa_merge_8k.json'
+  test_anno_path: 'data/eval/eval_mlvu_test.json' 
+video_env:
+  max_video_frames: 64
+  fps: 1
+  init_sample_num: 16
+  max_turns: 3
+  max_turn_frames: 8 
+  rewards:
+      frame_reward: 0.5
+      add_step_frame_reward: False 
+      add_final_frame_reward: True 
+video_reader_env:
+  use_cache: True
+  image_type: "tensor" 
+  
