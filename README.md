@@ -7,7 +7,7 @@ Video-MTR is a framework for training vision-language models (VLMs) on video und
 This repo provides:
 - Code for training and evaluation (PyTorch).
 - Annotations for the 8K temporally grounded QA dataset.
-Large model checkpoints will be released separately on Hugging Face.
+Large model checkpoints are released separately on Hugging Face: https://huggingface.co/Phoebe13/Video-MTR.
 
 ## Project Structure
 
@@ -64,7 +64,7 @@ pip install -e .
 cd ../
 
 # Video-MTR
-git clone XX
+git clone https://github.com/Xyuan13/Video-MTR
 cd Video-MTR
 bash install.sh
 
@@ -94,7 +94,6 @@ bash scripts/video_ppo/run_7B.sh
 - Evaluate the 7B model requires **4 GPUs** 
 ```bash
 
-# Run training with 7B model
 bash vagen/eval/run_eval.sh
 ```
 
