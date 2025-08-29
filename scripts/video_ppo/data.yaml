@@ -10,8 +10,8 @@ video_env:
   max_turn_frames: 8 
   rewards:
       frame_reward: 0.5
-      add_step_frame_reward: False 
-      add_final_frame_reward: True 
+      add_step_frame_reward: True
+      add_final_frame_reward: False
 video_reader_env:
   use_cache: True
   image_type: "tensor" 

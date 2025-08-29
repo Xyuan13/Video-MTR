@@ -3,17 +3,17 @@
 
 ## Overview
 
-Video-MTR is a framework for training vision-language models (VLMs) on video understanding tasks using multi-turn reinforcement learning. 
+Video-MTR is a framework for training vision-language models (VLMs) on long video understanding tasks using multi-turn reinforcement learning. 
 This repo provides:
-- Code for training and evaluation (PyTorch).
-- Annotations for the 8K temporally grounded QA dataset.
+- Code for training and evaluation.
+- Annotations for the 8K temporally grounded QA dataset for training.
 Large model checkpoints are released separately on Hugging Face: https://huggingface.co/Phoebe13/Video-MTR.
 
 ## Project Structure
 
 ```
 Video-MTR/
-├── data/                    # Training data annotations
+├── data/                    # Data annotations and intermediate data processing files
 ├── scripts/                 # Training and evaluation scripts
 ├── vagen/                   # Core VAGEN framework components
 ├── qwen-vl-utils/           # Qwen VL model utilities
@@ -26,7 +26,7 @@ Video-MTR/
 ###  `data/`
 Contains training data annotations for video understanding tasks. The annotations are in JSON format
 
-**Note**: Please download the original video datasets from their respective sources and place them in the appropriate directories as specified in the training scripts.
+**Note**: Please download the original video datasets from their respective sources and place them in the appropriate directories as specified in the annotations.
 
 ### `scripts/`
 Training  scripts for the Video-MTR framework:
@@ -99,9 +99,19 @@ bash vagen/eval/run_eval.sh
 
 ## Acknowledgements
 
-We would like to express our sincere gratitude to the **VAGEN framework** for providing the foundational multi-turn reinforcement learning infrastructure. This code is based on VAGEN with modifications specifically tailored for video understanding tasks. 
+We thank **[VAGEN](https://github.com/RAGEN-AI/VAGEN)** for providing the foundational multi-turn reinforcement learning infrastructure. This code is based on VAGEN with modifications specifically tailored for video understanding tasks. 
 
 ## Citation
-If you find this repository useful, please consider giving a star ⭐ and citation
+If you find this repository useful, please consider giving a star ⭐ and citation:
 
-
+```bibtex
+@misc{xie2025videomtrreinforcedmultiturnreasoning,
+      title={Video-MTR: Reinforced Multi-Turn Reasoning for Long Video Understanding}, 
+      author={Yuan Xie and Tianshui Chen and Zheng Ge and Lionel Ni},
+      year={2025},
+      eprint={2508.20478},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2508.20478}, 
+}
+```
