@@ -54,8 +54,8 @@ Utilities and tools for working with Qwen VL models.
 1. **Clone the repository**:
 ```
 # Create a new conda environment
-conda create -n vidoe-mtr python=3.10 -y
-conda activate vidoe-mtr
+conda create -n video-mtr python=3.10 -y
+conda activate video-mtr
 
 # verl
 git clone https://github.com/JamesKrW/verl.git
