@@ -152,7 +152,9 @@ def main():
         
         # Setup wandb for this model
         if inference_config.get('use_wandb', True):
-            setup_wandb(model_name, args.wandb_path_name, model_cfg, inference_config)
+            # Use the actual model name from config (e.g., 'gpt-4o') instead of config key (e.g., 'gpt')
+            actual_model_name = model_cfg.get('model_name', model_name)
+            setup_wandb(actual_model_name, args.wandb_path_name, model_cfg, inference_config)
         
         try:
             # Create model interface
