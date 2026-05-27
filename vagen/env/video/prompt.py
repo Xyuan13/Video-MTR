@@ -1,3 +1,6 @@
+import time
+
+
 def system_prompt(**kwargs):
     return """You are an expert in analyzing videos. You will be given a video and a question.
 
@@ -9,14 +12,14 @@ Actions you can take:
 2、answer (final response to the question)
 
 Analysis Process:
-You must conduct reasoning inside <think> and </think> first every time you get new frames. After reasoning, if you lack some information of the video to answer the question, you can send a retrive request by <retrive> start_frame, end_frame </retrive> and you can get sampled frames between this range in the next turn. \
+You must conduct reasoning inside <think> and </think> first every time you get new frames. After reasoning, if you lack some information of the video to answer the question, you can send a retrieve request by <retrieve> start_frame, end_frame </retrieve> and you can get sampled frames between this range in the next turn. \
 If you have enough information, you can directly provide the answer inside <answer> and </answer>.
 
 Note: Each observation will show the current turn number (e.g., "Turn 1/3") to help you track your progress.
 
 ‌Key Constraints‌:
 1、 ‌Answer the question in no more than {max_turns} turns.
-2、 Send retrive request ONLY if critical details are missing.
+2、 Send retrieve request ONLY if critical details are missing.
 """
 
 def system_prompt_v2(**kwargs):
@@ -33,18 +36,29 @@ def free_think_format_prompt_v2(add_example=False, **kwargs):
     
     # Get type-specific instruction from TYPE_TEMPLATE
     answer_type_instruction = TYPE_TEMPLATE.get(problem_type, "")
-    
-    intermediate_turn_prompt = f"""Format Template: 
-<think>...</think><answer>...</answer> or <think>...</think><retrieve>...</retrieve> \
-Please think about this question as if you were a human pondering deeply. Engage in an internal dialogue using expressions such as 'let me think', 'wait', 'Hmm', 'oh, I see', 'let's break it down', etc, or other natural language thought expressions. It's encouraged to include self-reflection or verification in the reasoning process.Provide your detailed reasoning between the <think> and </think> tags. 
-If you have enough information, {answer_type_instruction}.
-If you lack some information, think about the most relevant frame index range of the information you need, then you can retrieve dense frames in the range by sending a retrive request by <retrive> start_frame, end_frame </retrive>. IMPORTANT: start_frame and end_frame must be integers smaller than {max_frame_idx}.
+
+    initial_turn_prompt_with_example = f"""Format Template:
+<think>...</think><retrieve>...</retrieve> \
+Please think about this question as if you were a human pondering deeply. Engage in an internal dialogue using expressions such as 'let me think', 'wait', 'Hmm', 'oh, I see', 'let's break it down', etc, or other natural language thought expressions. It's encouraged to include self-reflection or verification in the reasoning process.Provide your detailed reasoning between the <think> and </think> tags.
+Think about the most relevant frame index range of the information you need, then you can retrieve dense frames in the range by sending a retrieve request by <retrieve> start_frame, end_frame </retrieve>. e.g. <think>It seems the girls are playing at the begining of the video. But I need to check what kind of sports they are playing.</think><retrieve>5,10</retrieve>IMPORTANT: start_frame and end_frame must be integers smaller than {max_frame_idx}.
 
 """
-    final_turn_prompt = f"""Format Template: 
+
+    intermediate_turn_prompt = f"""Format Template:
+<think>...</think><answer>...</answer> or <think>...</think><retrieve>...</retrieve> \
+Please think about this question as if you were a human pondering deeply. Engage in an internal dialogue using expressions such as 'let me think', 'wait', 'Hmm', 'oh, I see', 'let's break it down', etc, or other natural language thought expressions. It's encouraged to include self-reflection or verification in the reasoning process.Provide your detailed reasoning between the <think> and </think> tags.
+If you have enough information, {answer_type_instruction}.
+If you lack some information, think about the most relevant frame index range of the information you need, then you can retrieve dense frames in the range by sending a retrieve request by <retrieve> start_frame, end_frame </retrieve>. IMPORTANT: start_frame and end_frame must be integers smaller than {max_frame_idx}.
+
+"""
+    final_turn_prompt = f"""Format Template:
     <think>...</think><answer>...</answer> \
    Please think about this question as if you were a human pondering deeply. Engage in an internal dialogue using expressions such as 'let me think', 'wait', 'Hmm', 'oh, I see', 'let's break it down', etc, or other natural language thought expressions. It's encouraged to include self-reflection or verification in the reasoning process. Provide your detailed reasoning between the <think> and </think> tags.  {answer_type_instruction}
     """
+
+    # Force the first turn to retrieve.
+    if turn_num == 1:
+        return initial_turn_prompt_with_example
 
     if turn_num >= max_turns:
         base_prompt = final_turn_prompt
@@ -69,7 +83,7 @@ def free_think_format_prompt(add_example=True, **kwargs):
 <think>...</think><answer>...</answer> or <think>...</think><retrieve>...</retrieve> \
 
 If you have enough information, first think about your answer, then you can provide the answer inside <answer> and </answer>.{type_instruction}.
-If you lack some information, think about what information you need, then you can send a retrive request by <retrive> start_frame, end_frame </retrive>. IMPORTANT: start_frame and end_frame must be integers smaller than {max_frame_idx}].
+If you lack some information, think about what information you need, then you can send a retrieve request by <retrieve> start_frame, end_frame </retrieve>. IMPORTANT: start_frame and end_frame must be integers smaller than {max_frame_idx}].
 
 """
     final_turn_prompt = f"""Format Template: 
@@ -135,13 +149,28 @@ def init_observation_template(**kwargs):
     max_frame_idx = kwargs.get("max_frame_idx", "N/A")
     turn_num = kwargs.get("turn_num", 1)
     max_turns = kwargs.get("max_turns", "N/A")
+    duration = kwargs.get("duration", None)
 
-    #print(f"[Debug] init_observation_template: turn_num={turn_num}, max_turns={max_turns}")
     if problem_type == "multiple choice":
         problem = f"{problem}\nOptions: {options}"
 
+    def seconds_to_hhmmss(seconds):
+        if seconds is None or seconds < 0:
+            raise ValueError("Invalid seconds")
+        return time.strftime("%H:%M:%S", time.gmtime(int(seconds)))
+
     if frame_idx_list is not None and len(frame_idx_list) > 0:
-        frames_str = "\n".join([f"frame_idx:{idx}, {observation}" for idx in frame_idx_list])
+        # max_frame_idx is the last frame index; total frames = max_frame_idx + 1
+        max_video_frames = max_frame_idx + 1 if isinstance(max_frame_idx, int) else None
+        frames_with_time = []
+        for idx in frame_idx_list:
+            if duration and max_video_frames:
+                time_seconds = (idx / max_video_frames) * duration
+                time_str = seconds_to_hhmmss(time_seconds)
+                frames_with_time.append(f"frame_idx:{idx} (time:{time_str}), {observation}")
+            else:
+                frames_with_time.append(f"frame_idx:{idx}, {observation}")
+        frames_str = "\n".join(frames_with_time)
     else:
         frames_str = observation
 
@@ -150,13 +179,13 @@ def init_observation_template(**kwargs):
 
     if max_turns != "N/A" and turn_num >= max_turns:
         action_prompt = "You have reached the maximum number of turns. You must provide your final answer now."
-    else:        
+    else:
         action_prompt = f"You can choose to retrieve more frames or provide your answer."
 
 
     return f"""
 {turn_info}
-Now you are given {len(frame_idx_list)} selected frames from the video, with frame_idx_list: {frame_idx_list} 
+Now you are given {len(frame_idx_list)} selected frames from the video, with frame_idx_list: {frame_idx_list}
 
 Frames:
 {frames_str}

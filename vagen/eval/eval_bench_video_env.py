@@ -13,10 +13,6 @@ import re
 import sys
 import numpy as np
 
-# # Add VAGEN to Python path
-# vagen_path = "/data/xieyuan/VAGEN"
-# if vagen_path not in sys.path:
-#     sys.path.append(vagen_path)
 import torch
 import time
 import argparse
@@ -59,9 +55,10 @@ prefix = args.prefix
 llm = LLM(
         model=model_path,
         tensor_parallel_size=torch.cuda.device_count(),
-        max_model_len = 8192,
-        gpu_memory_utilization=0.8,
-        limit_mm_per_prompt={"image": 32, "video": 1},
+        max_model_len=int(os.environ.get("VIDEOEVAL_MAX_MODEL_LEN", "32768")),
+        gpu_memory_utilization=0.85,
+        limit_mm_per_prompt={"image": 80, "video": 1},
+        enforce_eager=True,
 )
 
     
@@ -88,8 +85,6 @@ from vagen.env import REGISTERED_ENV
 
 def create_video_data_config(video_data_config_path, test_anno_path, dataset_name, data_root=''):
     """Create video data configuration file"""
-    # Use the provided data_root parameter
-
     yaml_data = {
         'dataset': {
             'data_root': data_root,
@@ -97,11 +92,15 @@ def create_video_data_config(video_data_config_path, test_anno_path, dataset_nam
             'test_anno_path': test_anno_path
         },
         'video_env': {
-            'max_video_frames': 64,
+            'max_video_frames': 256,
             'fps': 1,
-            'init_sample_num': 16,
+            'init_sample_num': 48,
             'max_turns': 3,
-            'max_turn_frames': 8
+            'max_turn_frames': 16
+        },
+        'video_reader_env': {
+            'use_cache': True,
+            'image_type': 'tensor'
         }
     }
     with open(video_data_config_path, 'w') as f:
@@ -260,7 +259,8 @@ def evaluate_dataset(dataset_name, llm, tokenizer, processor, file_name, prefix=
 
     OUTPUT_PATH = f"{OUTPUT_DIR}/eval_{dataset_name}_{file_name}_hftokenizer.json"
 
-    ANNO_PATH = f"./data/eval/eval_{dataset_name}.json"
+    anno_root = os.environ.get('VIDEO_MTR_ANNO_ROOT', './data/eval')
+    ANNO_PATH = os.path.join(anno_root, f"eval_{dataset_name}.json")
 
 
     
@@ -374,7 +374,7 @@ def evaluate_dataset(dataset_name, llm, tokenizer, processor, file_name, prefix=
         
         print(f"📊 Previous statistics: Success: {success_count}/{total_processed} ({success_count/total_processed*100:.2f}%)")
     
-    batch_size = 32 #torch.cuda.device_count()
+    batch_size = int(os.environ.get('VIDEOEVAL_BATCH_SIZE', '32'))
     print(f"📦 Processing in batches of size: {batch_size}")
     
     for batch_start in tqdm(range(0+resume_index, len(data), batch_size), desc="Processing batches"):

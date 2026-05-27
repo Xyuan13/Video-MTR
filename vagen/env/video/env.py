@@ -50,7 +50,8 @@ class VideoReaderEnv():
         self.tool_using_num = 0
 
         # load all frames
-        self.video_frames = None  
+        self.video_frames = None
+        self.video_sample_fps = None
 
         # cache - read from config
         video_reader_config = config_dict.get('video_reader_env', {})
@@ -118,9 +119,12 @@ class VideoReaderEnv():
             else:
                 raise ValueError(f"Unknown video format in recognize video path: {x}")
 
-            # Use IMAGE_FACTOR defined in qwen_vl_utils
-            from qwen_vl_utils.vision_process import IMAGE_FACTOR
-            image_factor = IMAGE_FACTOR
+            # VIDEOENV_IMAGE_FACTOR controls spatial token granularity per frame.
+            # Falls back to qwen_vl_utils default when the env var is unset.
+            image_factor = int(os.environ.get('VIDEOENV_IMAGE_FACTOR', 0))
+            if not image_factor:
+                from qwen_vl_utils.vision_process import IMAGE_FACTOR
+                image_factor = IMAGE_FACTOR
             
 
             # Save the processed video frames to the processed video frames path
@@ -164,12 +168,17 @@ class VideoReaderEnv():
                 elif self.image_type == "tensor": # tensor
                     tensor_file_path = processed_video_frames_path + ".pt"
                     try:
-                        image_list = torch.load(tensor_file_path)
+                        cache_data = torch.load(tensor_file_path)
+                        # Support both new dict format ({"frames", "fps"}) and legacy list format.
+                        if isinstance(cache_data, dict) and "frames" in cache_data:
+                            image_list = cache_data["frames"]
+                            self.video_sample_fps = cache_data.get("fps")
+                        else:
+                            image_list = cache_data
+                            self.video_sample_fps = None
                         if image_list is None or len(image_list) == 0:
                             print(f"[Warning] VideoREnv: Loaded empty cache from {tensor_file_path}, will re-process video")
                             raise ValueError("Empty cache file")
-                        self.video_sample_fps = None # NotImplemented
-                        #print(f"[Debug] VideoREnv: load from cache at {tensor_file_path}, {len(image_list)} frames, shape: {image_list[0].shape}")
                         return image_list
                     except Exception as cache_error:
                         print(f"[Warning] VideoREnv: Failed to load from cache {tensor_file_path}: {cache_error}")
@@ -206,7 +215,8 @@ class VideoReaderEnv():
                             image.save(os.path.join(processed_video_frames_path, f"{i}.png"))
                     elif self.image_type == "tensor":
                         tensor_file_path = processed_video_frames_path + ".pt"
-                        torch.save(image_list, tensor_file_path)
+                        # Save fps alongside frames so timestamp prompts work on cache hits.
+                        torch.save({"frames": image_list, "fps": self.video_sample_fps}, tensor_file_path)
                 except Exception as e:
                     print(f"[Warning] VideoREnv: Failed to save frames to cache: {e}")
 
@@ -743,6 +753,17 @@ class VideoEnv(BaseEnv):
 
         # Reset the video frames and get video_dict
         video_dict = self.env.reset_video(video_index, split)
+
+        # Ensure curr_video_dict has a numeric duration so init_observation_template
+        # can show timestamps. VideoMME stores duration as a string bucket ("long"/...),
+        # MLVU annotations don't include duration at all — derive it from fps * frames
+        # when possible, else fall back to None (timestamps will be skipped).
+        if "duration" not in video_dict or not isinstance(video_dict.get("duration"), (int, float)):
+            if self.env.video_sample_fps and self.env.video_frames is not None and len(self.env.video_frames) > 0:
+                video_dict["duration"] = len(self.env.video_frames) / self.env.video_sample_fps
+            else:
+                video_dict["duration"] = None
+
         self.curr_video_dict = video_dict
         
         # Get video_sample_fps from VideoReaderEnv
@@ -818,9 +839,10 @@ class VideoEnv(BaseEnv):
                 frame_idx_list=obs_idxs,
                 max_frame_idx=max_frame_idx,
                 turn_num=self.turn_num+1,  # Next turn's observation, turn_num+1
-                max_turns=self.max_turns  # Use max_turns stored during initialization
-        ) + "\n" + format_prompt_text   
-                
+                max_turns=self.max_turns,  # Use max_turns stored during initialization
+                duration=self.curr_video_dict.get("duration", None),
+        ) + "\n" + format_prompt_text
+
         multi_modal_data = {
                 img_placeholder: obs_frames #[convert_numpy_to_PIL(self.gym_env._render_gui(mode='rgb_array'))]
         }
@@ -886,7 +908,7 @@ class VideoEnv(BaseEnv):
         img_placeholder = self.config.image_placeholder
         
         # Get maximum frame index of the video
-        max_frame_idx = len(self.env.video_frames) - 1 if self.env.video_frames else 0
+        max_frame_idx = len(self.env.video_frames) - 1 if self.env.video_frames is not None and len(self.env.video_frames) > 0 else 0
         
         # Get problem type
         problem_type = self.curr_video_dict.get('problem_type', 'unknown') if self.curr_video_dict else 'unknown'
@@ -920,8 +942,9 @@ class VideoEnv(BaseEnv):
             frame_idx_list=obs_idxs,
             max_frame_idx=max_frame_idx,
             turn_num=self.turn_num+1,  # Next turn's observation, turn_num+1
-            max_turns=self.max_turns  # Use max_turns stored during initialization
-        ) + "\n" + format_prompt_text   
+            max_turns=self.max_turns,  # Use max_turns stored during initialization
+            duration=self.curr_video_dict.get("duration", None),
+        ) + "\n" + format_prompt_text
                 
         multi_modal_data = {
             img_placeholder: obs_frames

@@ -14,3 +14,11 @@ __pycache__/
 # Large / generated data
 data/parquet_files/
 data/processed_video_cache/
+
+# Evaluation outputs (results, logs, dev scripts)
+vagen/eval/results/
+logs/
+scripts/eval/
+
+# Hydra training outputs (logs and resolved configs)
+outputs/

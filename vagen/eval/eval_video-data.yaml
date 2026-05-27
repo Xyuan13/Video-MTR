@@ -4,7 +4,10 @@ dataset:
   train_anno_path: null
 video_env:
   fps: 1
-  init_sample_num: 16
-  max_turn_frames: 8
+  init_sample_num: 48
+  max_turn_frames: 16
   max_turns: 3
-  max_video_frames: 64
+  max_video_frames: 256
+video_reader_env:
+  image_type: tensor
+  use_cache: true
